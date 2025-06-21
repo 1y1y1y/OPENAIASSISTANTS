@@ -3,10 +3,15 @@ import openai
 import time
 import datetime
 
+from dotenv import load_dotenv
+import os
+
 st.title("(주)사나이시스템 규정집 챗봇")
 
 # 여기에 직접 API Key를 입력하세요
-api_key = "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"
+load_dotenv()
+api_key = os.getenv("API_KEY")
+
 
 # 세션 상태에 대화 기록 초기화
 if "thread_id" not in st.session_state:
