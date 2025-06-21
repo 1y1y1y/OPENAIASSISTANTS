@@ -25,7 +25,7 @@ if "messages" not in st.session_state:
 user_input = st.text_input("무엇이 궁금한가요?")
 
 if st.button("전송"):
-    if not api_key or api_key.startswith("sk-여기에"):
+    if not api_key:
         st.error("API Key가 코드에 올바르게 입력되지 않았습니다.")
     elif not user_input.strip():
         st.error("무엇이 궁금한가요?")
