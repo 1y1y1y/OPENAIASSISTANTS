@@ -15,6 +15,14 @@ else:
 
 st.title("(주)사나이시스템 규정집 챗봇")
 
+# --- Assistant ID로 실제 모델명 조회 ---
+model_name = ""
+try:
+    client = openai.OpenAI(api_key=api_key)
+    assistant_info = client.beta.assistants.retrieve(assistant_id)
+    model_name = assistant_info.model
+except Exception as e:
+    model_name = "모델 조회 실패"
 
 # 세션 상태에 대화 기록 초기화
 if "thread_id" not in st.session_state:
@@ -22,7 +30,7 @@ if "thread_id" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-user_input = st.text_input("무엇이 궁금한가요?")
+user_input = st.text_input(f"무엇이 궁금한가요?   (모델: {model_name})")
 
 if st.button("전송"):
     if not api_key:
