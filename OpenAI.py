@@ -2,15 +2,18 @@ import streamlit as st
 import openai
 import time
 import datetime
-
-from dotenv import load_dotenv
 import os
 
-st.title("(주)사나이시스템 규정집 챗봇")
+if "API_KEY" in st.secrets:
+    api_key = st.secrets["API_KEY"]
+    assistant_id = st.secrets["ASSISTANT_ID"]
+else:
+    from dotenv import load_dotenv
+    load_dotenv()
+    api_key = os.getenv("API_KEY")
+    assistant_id = os.getenv("ASSISTANT_ID")
 
-# 여기에 직접 API Key를 입력하세요
-load_dotenv()
-api_key = os.getenv("API_KEY")
+st.title("(주)사나이시스템 규정집 챗봇")
 
 
 # 세션 상태에 대화 기록 초기화
@@ -57,7 +60,7 @@ if st.button("전송"):
             # Run 생성 및 완료 대기
             run = client.beta.threads.runs.create(
                 thread_id=st.session_state.thread_id,
-                assistant_id="asst_JrejxnKRFaHfHKmRnLIvQIV3"
+                assistant_id=assistant_id
             )
 
             while True:
